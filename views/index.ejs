@@ -55,8 +55,13 @@
                     socket.emit('new_user',{user:name})
                 }
 
-                socket.on('error',function(){
-                  $('#error').append('<h2>')      
+                socket.on('error',function(data){
+                 
+                    $('#error').append(`<h2>${data.message}</h2>`)
+
+                    newUser();
+                  
+                    // setTimeout(function(){ alert("Hello"); }, 3000);
                 })
 
                 

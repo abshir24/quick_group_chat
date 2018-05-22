@@ -34,15 +34,32 @@ const users = [];
 
 const messages = [];
 
+let checkUser = (user)=>{
+    for(let i = 0;i<users.length;i++)
+    {
+      if(users[i] == user)
+      {
+        return true
+      }
+    }
+    return false
+}
 
 io.sockets.on("connection", function(socket) {
     socket.on('new_user',function(data){
-       users.push(data.user)
 
-       socket.emit('load_page',{allmessages:messages})
-       
-       socket.broadcast.emit('new_user', {message:`${data.user} has joined the group`})
+       if(checkUser(user))
+       {
+          
+        socket.emit('error',{message:'User already exists fam'})
 
+       }else{
+        users.push(data.user)
+
+        socket.emit('load_page',{allmessages:messages})
+          
+        socket.broadcast.emit('new_user', {message:`${data.user} has joined the group`})
+       }
     })
 
     socket.on('new_message',function(data){
