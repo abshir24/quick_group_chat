@@ -48,12 +48,17 @@ let checkUser = (user)=>{
 io.sockets.on("connection", function(socket) {
     socket.on('new_user',function(data){
 
-       if(checkUser(user))
+       if(checkUser(data.user))
        {
-          
-        socket.emit('error',{message:'User already exists fam'})
+        
+        console.log(true) 
+
+        socket.emit('error',{message:"User already exists fam"})
 
        }else{
+
+        console.log(false)
+
         users.push(data.user)
 
         socket.emit('load_page',{allmessages:messages})

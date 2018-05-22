@@ -55,18 +55,20 @@
                     socket.emit('new_user',{user:name})
                 }
 
+                newUser();
+
                 socket.on('error',function(data){
                  
                     $('#error').append(`<h2>${data.message}</h2>`)
-
-                    newUser();
                   
-                    // setTimeout(function(){ alert("Hello"); }, 3000);
+                    setTimeout(function(){ newUser(); }, 3000);
                 })
 
                 
 
                 socket.on('load_page',function(data){
+
+                    $('#error').empty()
 
                     let messages = data.messages
 
@@ -100,18 +102,17 @@
 
                 })
                 
-
-
-            })
-
-                
+            })   
         
         </script>
     </head>
     <body>
+
+    <div class="#error"></div> 
+
     <h1>Rasta Chatroom</h1>
     
-    <div class="#error"></div>
+    
 
     <div id="message_board"></div>
 
