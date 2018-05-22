@@ -1,0 +1,122 @@
+<html>
+    <head>
+        <style>
+            h1{
+                text-align:center;
+            }
+            form{
+                height:75%;
+                width:75%;
+                /* outline:dotted red 2px; */
+                margin-left:13%;
+            }
+            input[type="text"]{
+                width:100.55%;
+                height:8%;
+                border:2px solid black;
+                margin-top:2%;
+                font-size:18px;
+            }
+            input[value="Send"]{
+                width:10%;
+                height:8%;
+                border:2px solid black;
+                float:right;
+                margin-top:2%;
+                margin-left:2%
+            }
+          
+            #message_board{
+                height:75%;
+                width:75%;
+                border:2px solid black;
+                margin-left:13%;
+            }
+
+            #error{
+                color:red;
+            }
+        </style>
+        <title>Sockets</title>
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script type ="text/javascript">
+            $(document).ready(function (){
+                var socket = io.connect();
+
+                var socket = io(); //1
+
+                var currentUser;
+
+                let newUser = ()=>{
+
+                    let name = prompt("What is your name fam?")
+                    
+                    socket.emit('new_user',{user:name})
+                }
+
+                socket.on('error',function(){
+                  $('#error').append('<h2>')      
+                })
+
+                
+
+                socket.on('load_page',function(data){
+
+                    let messages = data.messages
+
+                    for(let i = 0;i<message.length;i++)
+                    {
+                        $('#message_board').append(`<p>${messages[i].user}: ${messages[i].message}</p>`)
+                    }
+                })
+
+                socket.on('new_user',function(data){
+
+                    $('#message_board').append(`<p>${data.message}</p>`)
+                    
+                })
+
+                $('#new_message').submit(function(){
+
+                    let message = $('#message').val()
+
+                    $('#message').val('')
+
+                    socket.emit('new_message',{user:name,message:message})
+
+                    return false
+
+                })
+                
+                socket.on('post_message',function(data){
+
+                    $('#message_board').append(`<p>${data.user}: ${data.message}</p>`)
+
+                })
+                
+
+
+            })
+
+                
+        
+        </script>
+    </head>
+    <body>
+    <h1>Rasta Chatroom</h1>
+    
+    <div class="#error"></div>
+
+    <div id="message_board"></div>
+
+    
+
+    <form id="new_message">
+        <input type="text" id="message" placeholder="enter your message here">
+        <input type="submit" value="Send">
+    </form>
+   
+
+    </body>
+</html>
