@@ -53,7 +53,7 @@ io.sockets.on("connection", function(socket) {
         
         console.log(true) 
 
-        socket.emit('error',{message:"User already exists fam"})
+        socket.emit('existing_user',{message:"User already exists fam"})
 
        }else{
 

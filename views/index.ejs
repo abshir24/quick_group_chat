@@ -51,17 +51,19 @@
                 let newUser = ()=>{
 
                     let name = prompt("What is your name fam?")
+
+                    currentUser = name;
                     
-                    socket.emit('new_user',{user:name})
+                    socket.emit('new_user',{user:currentUser})
                 }
 
                 newUser();
 
-                socket.on('error',function(data){
+                socket.on('existing_user',function(data){
                  
                     $('#error').append(`<h2>${data.message}</h2>`)
                   
-                    setTimeout(function(){ newUser(); }, 3000);
+                    setTimeout(function(){ newUser(); }, 2000);
                 })
 
                 
@@ -90,7 +92,7 @@
 
                     $('#message').val('')
 
-                    socket.emit('new_message',{user:name,message:message})
+                    socket.emit('new_message',{user:currentUser,message:message})
 
                     return false
 
@@ -108,7 +110,7 @@
     </head>
     <body>
 
-    <div class="#error"></div> 
+    <div id="error"></div> 
 
     <h1>Rasta Chatroom</h1>
     
